@@ -1,0 +1,97 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  h1 {
+    @apply text-2xl md:text-4xl lg:text-6xl font-bold font-highlighted;
+  }
+  h2 {
+    @apply text-xl md:text-3xl lg:text-4xl font-bold font-highlighted;
+  }
+  h3 {
+    @apply font-highlighted font-medium text-xl md:text-2xl;
+  }
+  p {
+    @apply w-full max-w-xl lg:text-center;
+  }
+  li {
+    @apply appearance-none list-none;
+  }
+  section {
+    @apply px-4;
+  }
+  button {
+    @apply py-4 px-6 min-w-[8rem] lg:min-w-[10rem] rounded-sm transition-all duration-500 font-semibold shadow-md;
+  }
+}
+
+@layer components {
+  .icon {
+    @apply w-7 h-7 cursor-pointer;
+  }
+  .section-container {
+    @apply w-full max-w-7xl m-auto py-24 md:py-32 flex;
+  }
+  .navigation {
+    @apply block w-full p-4 flex-grow absolute top-14 left-0 bg-dark shadow-md lg:relative lg:top-0 lg:p-0 lg:shadow-none;
+  }
+  .animated-border {
+    @apply hidden lg:block absolute transition-all duration-500 ease-in-out bg-light;
+  }
+  .nav-link {
+    @apply relative flex gap-2 cursor-pointer lg:h-10 lg:px-4 lg:items-center;
+  }
+  .services-container {
+    @apply w-full grid grid-cols-2 grid-rows-4 h-[40rem] gap-4 md:space-x-4 md:space-y-4 md:gap-0 md:grid-cols-4 md:grid-rows-5 isolate transition-all duration-500 cursor-pointer;
+  }
+  .link-image {
+    @apply object-cover opacity-60 group-hover:opacity-50 lg:opacity-100 rounded transition-all duration-500;
+  }
+  .image-link-container {
+    @apply relative flex items-center justify-center;
+  }
+  .image-link {
+    @apply relative py-2 px-4 flex gap-2 border cursor-pointer lg:h-10 lg:p-8 lg:items-center lg:opacity-0 lg:group-hover:opacity-100 lg:border-none md:text-lg lg:text-2xl;
+  }
+  .text-link {
+    @apply flex items-center gap-2 text-lg font-semibold mt-6 transition-all duration-500 ml-1 lg:ml-0;
+  }
+  .swiper .swiper-slide {
+    @apply relative h-full w-full flex items-center rounded;
+  }
+  .event-polygon {
+    @apply h-full w-full bg-black opacity-80 text-light flex flex-col justify-center items-center gap-2;
+  }
+  .gallery-button {
+    @apply border min-w-[5rem] px-1 py-3 text-sm md:text-base md:min-w-[8rem] md:px-6 md:py-4;
+  }
+  .gallery-image-container {
+    @apply w-full h-[40vw] md:h-60 lg:h-80 relative rounded hover:opacity-60 transition-all duration-500;
+  }
+  .button-link {
+    @apply py-4 px-6 min-w-[8rem] lg:min-w-[10rem] text-center rounded-sm transition-all duration-500 font-semibold shadow-md;
+  }
+}
+
+#__next {
+  height: 100%;
+  min-height: max-content;
+  isolation: isolate;
+}
+
+.event-polygon {
+  clip-path: polygon(0 20%, 100% 10%, 100% 80%, 0 90%);
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  --swiper-theme-color: white;
+}
+
+.map-container {
+  width: 100%;
+  height: 100%;
+  border-radius: 0.25rem;
+  background: white;
+}
