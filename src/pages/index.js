@@ -11,16 +11,13 @@ import { sanityClient } from '../../sanity'
 import { urlFor } from '../../sanity'
 
 export default function Home({ homePage, events, contact }) {
-  const { showcase, about, services, menu, gallery } = homePage[0]
+  const { showcase, about, services, menu, gallery, meta } = homePage[0]
 
   return (
     <>
       <Head>
         <title>115 Kitchen&bar</title>
-        <meta
-          name='description'
-          content='Вишукана їжа та напої в найкращій компанії, в центрі Ужгорода. Насолоджуйтесь невимушеним і затишним вечором з нами.'
-        />
+        <meta name='description' content={meta} />
         <meta name='viewport' content='width=device-width, initial-scale=1' />
         <link rel='icon' href='/favicon.ico' />
       </Head>

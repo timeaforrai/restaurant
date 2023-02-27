@@ -5,12 +5,19 @@ import Events from '@/components/Events'
 import Services from '@/components/Services'
 import { sanityClient } from '../../sanity'
 import { urlFor } from '../../sanity'
+import Head from 'next/head'
 
 export default function Celebration({ celebration, events, contact }) {
-  const { mainImage, services } = celebration[0]
+  const { mainImage, services, meta } = celebration[0]
 
   return (
     <>
+     <Head>
+        <title>115 Kitchen&bar || Святкування</title>
+        <meta name='description' content={meta} />
+        <meta name='viewport' content='width=device-width, initial-scale=1' />
+        <link rel='icon' href='/favicon.ico' />
+      </Head>
       <section className='relative h-40 lg:h-80 w-full'>
         <Image
           src={urlFor(mainImage).url()}

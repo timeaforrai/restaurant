@@ -5,12 +5,19 @@ import { sanityClient } from '../../sanity'
 import { urlFor } from '../../sanity'
 import Image from 'next/image'
 import Services from '@/components/Services'
+import Head from 'next/head'
 
 export default function Business({ business, events, contact }) {
-  const { mainImage, services } = business[0]
+  const { mainImage, services, meta } = business[0]
 
   return (
     <>
+      <Head>
+        <title>115 Kitchen&bar || Бізнес</title>
+        <meta name='description' content={meta} />
+        <meta name='viewport' content='width=device-width, initial-scale=1' />
+        <link rel='icon' href='/favicon.ico' />
+      </Head>
       <section className='relative h-40 lg:h-80 w-full'>
         <Image
           src={urlFor(mainImage).url()}
