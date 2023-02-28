@@ -12,6 +12,7 @@ function HomeHero({ showcase }) {
         fill
         sizes='100%'
         className='object-cover -z-20 opacity-30'
+        priority
         placeholder='blur'
         blurDataURL={urlFor(showcase.image).url()}
       />

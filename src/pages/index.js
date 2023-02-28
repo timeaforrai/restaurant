@@ -28,7 +28,7 @@ export default function Home({ homePage, events, contact }) {
         <section className='bg-light text-dark'>
           <div className='section-container flex-col justify-center items-center gap-4'>
             <h2>{menu.title}</h2>
-            <p>{menu.description && menu.description}</p>
+            <p className='text-center'>{menu.description && menu.description}</p>
             <TextLink name='Меню' route='https://115.choiceqr.com/online-menu' classes='text-orange-dark hover:text-orange' />
           </div>
         </section>
