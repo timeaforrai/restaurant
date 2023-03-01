@@ -15,7 +15,7 @@ function HomeHero({ showcase }) {
         className='object-cover -z-20 opacity-30'
         priority
         placeholder='blur'
-        blurDataURL={showcase.image.asset.metadata.blurHash}
+        blurDataURL={showcase.image.asset.metadata.lqip}
       />
       <div className='section-container h-full flex-col items-center justify-center gap-4'>
         <h1>{showcase.name}</h1>
