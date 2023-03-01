@@ -6,6 +6,7 @@ import Services from '@/components/Services'
 import { sanityClient } from '../../sanity'
 import { urlFor } from '../../sanity'
 import Head from 'next/head'
+import Img from '@/templates/Img'
 
 export default function Restaurant({ restaurant, events, contact }) {
   const { mainImage, services, meta } = restaurant[0]
@@ -19,14 +20,7 @@ export default function Restaurant({ restaurant, events, contact }) {
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <section className='relative h-40 lg:h-80 w-full'>
-        <Image
-          src={urlFor(mainImage).url()}
-          fill
-          sizes='100%'
-          role='presentation'
-          alt=''
-          className='object-cover rounded shadow-md'
-        />
+        <Img source={mainImage} role='presentation' altValue='' classes='rounded shadow-md' priority />
       </section>
       <Services services={services} linkUrl='https://115.choiceqr.com/online-menu' linkName='Меню' />
       <Events events={events} />
@@ -37,16 +31,53 @@ export default function Restaurant({ restaurant, events, contact }) {
 
 export async function getStaticProps() {
   const pageQuery = `*[_type == "restaurantPage"] {
-    ...
+    mainImage {
+      asset-> {
+        ...,
+        metadata
+      }
+    },
+    meta,
+    services[] {
+      title,
+      description,
+      image {
+        asset-> {
+          ...,
+          metadata
+        }
+      }
+    },
   }`
 
   const eventsQuery = `*[_type == "event"] {
-    ...,
-  }`
-
+    name,
+    date,
+    location,
+    image {
+      asset-> {
+        ...,
+        metadata
+      }
+    },  
+}`
   const contactQuery = `*[_type == "contactData"] {
-    ...,
-    mainImage->
+    address {
+      title,
+      value
+    },
+    email {
+      title,
+      value
+    },
+    open {
+      title,
+      value
+    },
+    phone {
+      title,
+      value
+    }
   }`
 
   const restaurant = await sanityClient.fetch(pageQuery)

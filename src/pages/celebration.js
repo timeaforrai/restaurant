@@ -1,32 +1,24 @@
 import React from 'react'
-import Image from 'next/image'
+import Head from 'next/head'
+import { sanityClient } from '../../sanity'
 import Contact from '@/components/Contact'
 import Events from '@/components/Events'
 import Services from '@/components/Services'
-import { sanityClient } from '../../sanity'
-import { urlFor } from '../../sanity'
-import Head from 'next/head'
+import Img from '@/templates/Img'
 
 export default function Celebration({ celebration, events, contact }) {
   const { mainImage, services, meta } = celebration[0]
 
   return (
     <>
-     <Head>
+      <Head>
         <title>115 Kitchen&bar || Святкування</title>
         <meta name='description' content={meta} />
         <meta name='viewport' content='width=device-width, initial-scale=1' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <section className='relative h-40 lg:h-80 w-full'>
-        <Image
-          src={urlFor(mainImage).url()}
-          fill
-          sizes='100%'
-          role='presentation'
-          alt=''
-          className='object-cover rounded shadow-md'
-        />
+        <Img source={mainImage} altValue='' classes='rounded shadow-md' role='presentation' priority />
       </section>
       <Services services={services} linkUrl='#contact' linkName='Контакт' />
       <Events events={events} />
@@ -37,16 +29,53 @@ export default function Celebration({ celebration, events, contact }) {
 
 export async function getStaticProps() {
   const pageQuery = `*[_type == "celebrationPage"] {
-    ...
+    mainImage {
+      asset-> {
+        ...,
+        metadata
+      }
+    },
+    meta,
+    services[] {
+      title,
+      description,
+      image {
+        asset-> {
+          ...,
+          metadata
+        }
+      }
+    },
   }`
 
   const eventsQuery = `*[_type == "event"] {
-    ...,
-  }`
-
+    name,
+    date,
+    location,
+    image {
+      asset-> {
+        ...,
+        metadata
+      }
+    },  
+}`
   const contactQuery = `*[_type == "contactData"] {
-    ...,
-    mainImage->
+    address {
+      title,
+      value
+    },
+    email {
+      title,
+      value
+    },
+    open {
+      title,
+      value
+    },
+    phone {
+      title,
+      value
+    }
   }`
 
   const celebration = await sanityClient.fetch(pageQuery)

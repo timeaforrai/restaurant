@@ -1,13 +1,11 @@
 import React from 'react'
-import { urlFor } from '../../sanity'
-
+import Img from '@/templates/Img'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
 import 'swiper/css'
 import 'swiper/css/navigation'
 
 import { Navigation } from 'swiper'
-import Image from 'next/image'
 
 function Events({ events }) {
   return (
@@ -17,15 +15,7 @@ function Events({ events }) {
           {events.map((event, index) => {
             return (
               <SwiperSlide key={index} className='swiper-slide'>
-                <Image
-                  src={urlFor(event.image).url()}
-                  alt={event.name}
-                  fill
-                  sizes='100%'
-                  className='object-cover -z-10 rounded'
-                  placeholder='blur'
-                  blurDataURL={urlFor(event.image).url()}
-                />
+                <Img source={event} altValue={event.name} className='-z-10 rounded' />
                 <div className='event-polygon '>
                   <h2 className='text-2xl lg:text-5xl max-w-[70%]'>{event.name}</h2>
                   <p className='text-center lg:text-lg max-w-[70%]'>{event.date}</p>

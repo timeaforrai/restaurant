@@ -6,12 +6,11 @@ import HomeHero from '@/components/HomeHero'
 import HomeServices from '@/components/HomeServices'
 import TextLink from '@/templates/TextLink'
 import Head from 'next/head'
-import Image from 'next/image'
 import { sanityClient } from '../../sanity'
-import { urlFor } from '../../sanity'
 
 export default function Home({ homePage, events, contact }) {
   const { showcase, about, services, menu, gallery, meta } = homePage[0]
+
   return (
     <>
       <Head>
@@ -41,7 +40,6 @@ export default function Home({ homePage, events, contact }) {
 
 export async function getStaticProps() {
   const pageQuery = `*[_type == "homePage"] {
-    ...,
     showcase{
       description,
       name,
@@ -52,22 +50,115 @@ export async function getStaticProps() {
         }
       }
     },
+    about {
+      title,
+      description,
+      image {
+        asset-> {
+          ...,
+          metadata,
+        }
+      }
+    },
+    services{
+      title,
+      services {
+        business {
+          title,
+          image {
+            asset-> {
+              ...,
+              metadata
+            }
+          }
+        },celebration {
+          title,
+          image {
+            asset-> {
+              ...,
+              metadata
+            }
+          }
+        },
+        drinks {
+          title,
+          image {
+            asset-> {
+              ...,
+              metadata
+            }
+          }
+        },
+        food {
+          title,
+          image {
+            asset-> {
+              ...,
+              metadata
+            }
+          }
+        },
+        takeaway {
+          title,
+          image {
+            asset-> {
+              ...,
+              metadata
+            }
+          }
+        },
+      }
+    },
     gallery{
       title,
       description,
-      gallery[]->,
+      gallery[]->
+      {
+        category,
+        name,
+        image {
+          asset-> {
+            ...,
+            metadata
+          }
+        }
+      },
     },
-    contact{
-      data->
+    menu {
+      title,
+      description
     }
   }`
 
   const eventsQuery = `*[_type == "event"] {
-    ...,
+      name,
+      date,
+      location,
+      image {
+        asset-> {
+          ...,
+          metadata
+        }
+      },  
   }`
 
   const contactQuery = `*[_type == "contactData"] {
-    ...,
+    address {
+      title,
+      value
+    },
+    email {
+      title,
+      value
+    },
+    open {
+      title,
+      value
+    },
+    phone {
+      title,
+      value
+    }
   }`
 
   const homePage = await sanityClient.fetch(pageQuery)

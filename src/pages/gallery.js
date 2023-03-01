@@ -1,17 +1,19 @@
 import React, { useState } from 'react'
-import Image from 'next/image'
+import Head from 'next/head'
 import { sanityClient } from '../../sanity'
-import { urlFor } from '../../sanity'
 import { MdClose } from 'react-icons/md'
 import Events from '@/components/Events'
 import Contact from '@/components/Contact'
+import Img from '@/templates/Img'
 import backgroundImage from '../../public/images/115-kitchen.jpg'
-import Head from 'next/head'
+import Image from 'next/image'
 
 export default function Gallery({ gallery, events, contact }) {
   const [selected, setSelected] = useState('all')
   const [openModal, setOpenModal] = useState(false)
-  const [url, setUrl] = useState(backgroundImage)
+  const [url, setUrl] = useState(false)
+
+  console.log(url)
 
   return (
     <>
@@ -28,7 +30,7 @@ export default function Gallery({ gallery, events, contact }) {
       </Head>
       <div className='flex flex-col'>
         <section className='relative h-40 lg:h-80 w-full'>
-          <Image src={backgroundImage} fill sizes='100%' role='presentation' alt='' className='object-cover rounded shadow-md' />
+          <Image src={backgroundImage} role='presentation' fill sizes='100%' alt='' className='object-cover rounded shadow-md' />
         </section>
         <section>
           <div className='section-container py-12 justify-between overflow-hidden flex-wrap'>
@@ -65,18 +67,13 @@ export default function Gallery({ gallery, events, contact }) {
                 if (selected === image.category || selected === 'all') {
                   return (
                     <div className='gallery-image-container' key={index}>
-                      <Image
+                      <Img
                         key={index}
-                        src={urlFor(image.image).url()}
-                        alt={image.name}
-                        fill
-                        sizes='100%'
-                        loading='lazy'
-                        className='object-cover rounded'
-                        placeholder='blur'
-                        blurDataURL={urlFor(image.image).url()}
+                        source={image}
+                        altValue={image.name}
+                        classes='rounded'
                         onClick={() => {
-                          setOpenModal(true), setUrl(urlFor(image.image).url())
+                          setOpenModal(true), setUrl(image)
                         }}
                       />
                     </div>
@@ -88,25 +85,25 @@ export default function Gallery({ gallery, events, contact }) {
         </section>
         <Events events={events} />
         <Contact contact={contact[0]} />
-        <div className={`${openModal ? 'absolute inset-0 z-20 bg-dark bg-opacity-90' : 'hidden'}`}>
-          <div
-            className='fixed inset-y-24 inset-x-4 z-30 max-w-7xl md:inset-x-24 md:inset-y-60 xl:top-[20%] xl:left-[25%] 
+        {url && (
+          <div className={`${openModal ? 'absolute inset-0 z-20 bg-dark bg-opacity-90' : 'hidden'}`}>
+            <div
+              className='fixed inset-y-24 inset-x-4 z-30 max-w-7xl md:inset-x-24 md:inset-y-60 xl:top-[20%] xl:left-[25%] 
         xl:h-[60%] xl:w-[50%]'
-          >
-            <Image
-              src={url}
-              alt=''
-              fill
-              sizes='100%'
-              className='rounded-md object-cover'
-              role='presentation'
-              onClick={() => setOpenModal(false)}
-            />
-            <div className='absolute right-8 top-8 h-6 w-6 cursor-pointer text-slate-dark'>
-              <MdClose className='h-8 w-8 text-dark' onClick={() => setOpenModal(false)} />
+            >
+              <Img
+                source={url}
+                altValue=''
+                classes='rounded-md object-cover'
+                role='presentation'
+                onClick={() => setOpenModal(false)}
+              />
+              <div className='absolute right-8 top-8 h-6 w-6 cursor-pointer text-slate-dark'>
+                <MdClose className='h-8 w-8 text-dark' onClick={() => setOpenModal(false)} />
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </>
   )
@@ -114,17 +111,45 @@ export default function Gallery({ gallery, events, contact }) {
 
 export async function getStaticProps() {
   const pageQuery = `*[_type == "gallery"] {
+    name,
     category,
-    image,
-    name
+    image {
+      asset-> {
+        ...,
+        metadata
+      }
+    }
   }`
 
   const eventsQuery = `*[_type == "event"] {
-    ...,
-  }`
+    name,
+    date,
+    location,
+    image {
+      asset-> {
+        ...,
+        metadata
+      }
+    },  
+}`
 
   const contactQuery = `*[_type == "contactData"] {
-    ...,
+    address {
+      title,
+      value
+    },
+    email {
+      title,
+      value
+    },
+    open {
+      title,
+      value
+    },
+    phone {
+      title,
+      value
+    }
   }`
 
   const gallery = await sanityClient.fetch(pageQuery)

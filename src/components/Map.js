@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react'
-import { GoogleMap, MarkerF, InfoWindow, useJsApiLoader } from '@react-google-maps/api'
+import { GoogleMap, MarkerF, useJsApiLoader } from '@react-google-maps/api'
 
 const Map = () => {
   const { isLoaded } = useJsApiLoader({

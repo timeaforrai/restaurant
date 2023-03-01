@@ -1,22 +1,11 @@
 import React from 'react'
-import Image from 'next/image'
-import { urlFor } from '../../sanity'
 import Link from 'next/link'
-import { useNextSanityImage } from 'next-sanity-image'
+import Img from '@/templates/Img'
 
 function HomeHero({ showcase }) {
   return (
     <section className='relative h-800px md:h-screen isolate bg-dark'>
-      <Image
-        src={urlFor(showcase.image).url()}
-        alt='bar'
-        fill
-        sizes='100%'
-        className='object-cover -z-20 opacity-30'
-        priority
-        placeholder='blur'
-        blurDataURL={showcase.image.asset.metadata.blurHash}
-      />
+      <Img source={showcase} altValue='bar' classes='-z-20 opacity-30' priority />
       <div className='section-container h-full flex-col items-center justify-center gap-4'>
         <h1>{showcase.name}</h1>
         <p className='text-center lg:text-lg'>{showcase.description}</p>

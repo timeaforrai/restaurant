@@ -1,6 +1,5 @@
 import React from 'react'
-import Image from 'next/image'
-import { urlFor } from '../../sanity'
+import Img from '@/templates/Img'
 
 function About({ about }) {
   return (
@@ -11,14 +10,7 @@ function About({ about }) {
           <p className='text-center lg:text-left'>{about.description}</p>
         </div>
         <div className='relative hidden lg:block h-80 w-[35rem] rounded'>
-          <Image
-            src={urlFor(about.image).url()}
-            fill
-            sizes='100%'
-            role='presentation'
-            alt=''
-            className='object-cover rounded shadow-md'
-          />
+          <Img source={about} role='presentation' altValue='' classes='rounded shadow-md' />
         </div>
       </div>
     </section>

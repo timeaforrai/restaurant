@@ -18,7 +18,6 @@ export default function PrivacyPolicy({ privacyPolicy, contact }) {
       bullet: ({ children }) => <li className='ml-12 list-disc'>{children}</li>,
     },
     marks: {
-      // Ex. 2: rendering a custom `link` annotation
       link: ({ value, children }) => {
         const target = (value?.href || '').startsWith('http') ? '_blank' : undefined
         return (
@@ -33,16 +32,7 @@ export default function PrivacyPolicy({ privacyPolicy, contact }) {
   return (
     <>
       <section className='relative h-40 lg:h-80 w-full'>
-        <Image
-          src={backgroundImage}
-          fill
-          sizes='100%'
-          role='presentation'
-          alt=''
-          className='object-cover rounded shadow-md'
-          placeholder='blur'
-          blurDataURL={'../../public/images/115-kitchen.jpg'}
-        />
+        <Image src={backgroundImage} fill sizes='100%' role='presentation' alt='' className='object-cover rounded shadow-md' />
       </section>
 
       <section>
@@ -61,9 +51,23 @@ export async function getStaticProps() {
   }`
 
   const contactQuery = `*[_type == "contactData"] {
-    ...,
+    address {
+      title,
+      value
+    },
+    email {
+      title,
+      value
+    },
+    open {
+      title,
+      value
+    },
+    phone {
+      title,
+      value
+    }
   }`
-
   const privacyPolicy = await sanityClient.fetch(pageQuery)
   const contact = await sanityClient.fetch(contactQuery)
 

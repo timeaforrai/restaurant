@@ -1,3 +1,4 @@
+import Img from '@/templates/Img'
 import TextLink from '@/templates/TextLink'
 import Image from 'next/image'
 import React from 'react'
@@ -22,14 +23,7 @@ function Services({ services, linkUrl, linkName }) {
               </div>
               <div className=' w-full lg:w-1/2 flex items-center justify-start group-even:justify-end'>
                 <div className='relative w-full h-52 md:h-80 lg:w-[90%] rounded'>
-                  <Image
-                    src={urlFor(service.image).url()}
-                    alt=''
-                    role='presentation'
-                    fill
-                    sizes='100%'
-                    className='object-cover rounded shadow-md'
-                  />
+                  <Img source={service} altValue='' classes='object-cover rounded shadow-md' role='presentation' />
                 </div>
               </div>
             </div>

@@ -46,7 +46,7 @@
     @apply w-full grid grid-cols-2 grid-rows-4 h-[40rem] gap-4 md:space-x-4 md:space-y-4 md:gap-0 md:grid-cols-4 md:grid-rows-5 isolate transition-all duration-500 cursor-pointer;
   }
   .link-image {
-    @apply object-cover opacity-60 group-hover:opacity-50 lg:opacity-100 rounded transition-all duration-500;
+    @apply opacity-60 group-hover:opacity-50 lg:opacity-100 rounded transition-all duration-500;
   }
   .image-link-container {
     @apply relative flex items-center justify-center;

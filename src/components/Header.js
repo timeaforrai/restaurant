@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
-import { HiBars3, HiOutlineSun, HiOutlineMoon } from 'react-icons/hi2'
+import { HiBars3 } from 'react-icons/hi2'
 import { MdOutlineFacebook } from 'react-icons/md'
 import { AiFillInstagram } from 'react-icons/ai'
 import logo from '../../public/images/logo_small.png'

@@ -1,11 +1,10 @@
 import React from 'react'
+import Head from 'next/head'
+import { sanityClient } from '../../sanity'
 import Contact from '@/components/Contact'
 import Events from '@/components/Events'
-import { sanityClient } from '../../sanity'
-import { urlFor } from '../../sanity'
-import Image from 'next/image'
 import Services from '@/components/Services'
-import Head from 'next/head'
+import Img from '@/templates/Img'
 
 export default function Business({ business, events, contact }) {
   const { mainImage, services, meta } = business[0]
@@ -19,14 +18,7 @@ export default function Business({ business, events, contact }) {
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <section className='relative h-40 lg:h-80 w-full'>
-        <Image
-          src={urlFor(mainImage).url()}
-          fill
-          sizes='100%'
-          role='presentation'
-          alt=''
-          className='object-cover rounded shadow-md'
-        />
+        <Img source={mainImage} altValue='' classes='rounded shadow-md' role='presentation' priority />
       </section>
       <Services services={services} linkUrl='#contact' linkName='Контакт' />
       <Events events={events} />
@@ -37,16 +29,54 @@ export default function Business({ business, events, contact }) {
 
 export async function getStaticProps() {
   const pageQuery = `*[_type == "businessPage"] {
-    ...
+    mainImage {
+      asset-> {
+        ...,
+        metadata
+      }
+    },
+    meta,
+    services[] {
+      title,
+      description,
+      image {
+        asset-> {
+          ...,
+          metadata
+        }
+      }
+    },
   }`
 
   const eventsQuery = `*[_type == "event"] {
-    ...,
-  }`
+    name,
+    date,
+    location,
+    image {
+      asset-> {
+        ...,
+        metadata
+      }
+    },  
+}`
 
   const contactQuery = `*[_type == "contactData"] {
-    ...,
-    mainImage->
+    address {
+      title,
+      value
+    },
+    email {
+      title,
+      value
+    },
+    open {
+      title,
+      value
+    },
+    phone {
+      title,
+      value
+    }
   }`
 
   const business = await sanityClient.fetch(pageQuery)

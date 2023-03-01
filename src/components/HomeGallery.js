@@ -1,7 +1,6 @@
 import React from 'react'
-import Image from 'next/image'
 import TextLink from '@/templates/TextLink'
-import { urlFor } from '../../sanity'
+import Img from '@/templates/Img'
 
 function HomeGallery({ gallery }) {
   return (
@@ -16,7 +15,7 @@ function HomeGallery({ gallery }) {
           {gallery.gallery.map((image, index) => {
             return (
               <div className='relative w-[47%] h-28 bg-white rounded md:w-1/4 md:h-32 lg:h-40' key={index}>
-                <Image src={urlFor(image.image).url()} alt={image.name} fill sizes='100%' className='object-cover rounded' />
+                <Img source={image} altValue={image.name} classes='rounded' />
               </div>
             )
           })}
