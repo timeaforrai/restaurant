@@ -12,7 +12,6 @@ import { urlFor } from '../../sanity'
 
 export default function Home({ homePage, events, contact }) {
   const { showcase, about, services, menu, gallery, meta } = homePage[0]
-
   return (
     <>
       <Head>
@@ -43,6 +42,16 @@ export default function Home({ homePage, events, contact }) {
 export async function getStaticProps() {
   const pageQuery = `*[_type == "homePage"] {
     ...,
+    showcase{
+      description,
+      name,
+      image {
+        asset->{
+          ...,
+          metadata
+        }
+      }
+    },
     gallery{
       title,
       description,

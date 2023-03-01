@@ -2,6 +2,7 @@ import React from 'react'
 import Image from 'next/image'
 import { urlFor } from '../../sanity'
 import Link from 'next/link'
+import { useNextSanityImage } from 'next-sanity-image'
 
 function HomeHero({ showcase }) {
   return (
@@ -14,7 +15,7 @@ function HomeHero({ showcase }) {
         className='object-cover -z-20 opacity-30'
         priority
         placeholder='blur'
-        blurDataURL={urlFor(showcase.image).url()}
+        blurDataURL={showcase.image.asset.metadata.blurHash}
       />
       <div className='section-container h-full flex-col items-center justify-center gap-4'>
         <h1>{showcase.name}</h1>
