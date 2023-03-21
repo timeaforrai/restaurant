@@ -4,7 +4,7 @@ import Img from '@/templates/Img'
 
 const LinkImage = ({ source, route, classes }) => {
   return (
-    <Link className={`image-link-container group ${classes}`} href={route} target='_blank'>
+    <Link className={`image-link-container group ${classes}`} href={route}>
       <Img source={source} altValue={source.title} fill sizes='100%' classes='link-image' />
       <div className='image-link'>
         <div className='animated-border top-0 left-0 w-0 h-[1px] group-hover:w-full' />
