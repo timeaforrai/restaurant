@@ -13,8 +13,6 @@ export default function Gallery({ gallery, events, contact }) {
   const [openModal, setOpenModal] = useState(false)
   const [url, setUrl] = useState(false)
 
-  console.log(url)
-
   return (
     <>
       <Head>
